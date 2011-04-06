@@ -1,0 +1,141 @@
+<!--DOCTYPE html5-->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>jQuery rihtClick Demo</title>	
+		
+		<style type="text/css">
+			h1 {
+				font-size: 24px;
+				font-family: Helvetica, Arial, serif;
+				color: #101010;
+			}
+		
+			.txt {
+				font-size: 14px;
+				font-family: Helvetica, Arial, serif;
+				color: #202020;
+				line-height: 16px;
+			}
+			
+			#rightclick {
+				width: 200px;
+				background-color: #454440;
+			}
+			#rightclick-list {
+				margin: 0;
+				padding: 0;
+			}
+			.rightclick-list-item, .rightclick-list-item-label {
+				color: #dfdbd2;
+				font-size: 12px;
+				font-family: Arial, Helvetica;
+				text-decoration: none;
+				margin: 0;
+			}
+			.rightclick-list-item {
+				width: 100%;
+				padding: 0;
+				list-style-type: none;
+			}
+			.rightclick-list-item-label {
+				display: block;
+				width: 160px;
+				height: 100%;
+				padding: 5px 20px 5px 20px;
+			}
+			.rightclick-list-item:hover {
+				background-color: #f17948;
+			}
+		</style>
+		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
+		<script type="text/javascript" src="jquery.right-click.js"></script>
+		<script type=text/javascript>
+			$(document).ready(function(){
+				$('.txt').rightClick('init', 
+												[
+												 	{
+												 		text : 'Test',
+												 		callback : function(){
+												 			alert('test alert 1');
+												 		}
+												 	},
+												 	{
+												 		text : 'Test 2',
+												 		callback : function(){
+												 			alert('test alert 2');
+												 		}
+												 	}
+												]
+									);
+			});
+		</script>
+	</head>
+	<body>
+	
+		<h1>jQuery rightClick Demo</h1>
+	
+		<p class="txt">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac felis nisi, sit amet fermentum
+			ipsum. Curabitur ac erat nibh. In fringilla lacus placerat libero mattis ac dapibus risus interdum.
+			Suspendisse aliquet aliquam velit ac ultrices. Morbi convallis sem sit amet lectus mattis ut rutrum magna
+			sagittis. Donec eu mauris massa, et venenatis ligula. Aliquam erat volutpat. Nunc feugiat tempor ipsum,
+			ut gravida magna sollicitudin euismod. Quisque eget blandit purus. Fusce porta tempus mollis. Maecenas
+			tincidunt aliquet sagittis. Nunc vel quam sapien. Vivamus vel ante vel odio fermentum condimentum.
+			Praesent ullamcorper sagittis vestibulum. Aliquam erat volutpat. Integer quis elit eu metus ultrices
+			faucibus vel et eros. Ut non felis vitae quam pretium pharetra feugiat a turpis. Nam imperdiet sapien ac
+			sapien venenatis rhoncus. Proin ultrices justo id massa pulvinar laoreet. Nulla id cursus libero.
+		</p>
+		
+		<p class="txt">
+			Sed sem mi, rhoncus mattis sodales at, pretium eu nibh. Nunc odio nibh, egestas eu pharetra non, tincidunt
+			bibendum diam. Morbi in nisi leo. Donec auctor interdum nisl in scelerisque. Mauris in ante mi. Suspendisse
+			at turpis sit amet massa blandit porttitor. Aliquam erat volutpat. Cras blandit laoreet nibh vitae interdum. 
+			Proin adipiscing, enim eu accumsan lacinia, ante leo suscipit nibh, in rhoncus diam mi vitae diam. Nulla
+			convallis pretium arcu, nec consequat enim sagittis ut. Vivamus accumsan, nulla sit amet molestie fermentum,
+			metus enim interdum mauris, at convallis massa tortor at sem. Vestibulum ultricies ipsum vitae tortor auctor
+			eu tincidunt elit venenatis. Sed euismod adipiscing justo, sed convallis urna ultrices nec. Maecenas aliquet
+			quam vitae eros ornare semper. Suspendisse cursus tempor odio, vel varius lorem lobortis ac. Fusce convallis,
+			urna nec bibendum tristique, elit ligula tempus mauris, luctus fermentum lorem quam vel ipsum. Vestibulum arcu justo,
+			pharetra sed fringilla at, pharetra quis erat. Curabitur et arcu ante, a pulvinar elit. Integer fringilla, lectus eu
+			cursus porta, nisl arcu adipiscing risus, ut congue neque nunc non eros.
+		</p>
+		
+		<p class="txt">
+			Nulla diam sem, aliquam sed hendrerit id, porta id justo. Suspendisse potenti. Suspendisse sed metus vitae
+			mauris luctus gravida at nec felis. Duis tempus pulvinar libero, at eleifend purus auctor ut. Nulla at odio
+			in tellus aliquet commodo eu sed sapien. Vestibulum eget mi dolor. Pellentesque varius, metus ac accumsan
+			mollis, sapien arcu faucibus magna, quis interdum tortor odio nec nunc. Nullam vitae leo a erat congue
+			blandit ut in ipsum. Nullam iaculis velit ut magna rhoncus et viverra est hendrerit. Nullam mauris est, 
+			cursus sed aliquam non, dignissim vitae neque. Donec quis dolor nec risus posuere tincidunt. Etiam erat sem, 
+			feugiat venenatis faucibus sit amet, interdum a tortor. Mauris gravida tincidunt nunc ut feugiat. Pellentesque
+			feugiat enim eget leo commodo ac viverra dolor mollis. Ut commodo massa a diam consectetur vel rutrum est tristique.
+			Donec rutrum erat rhoncus ante gravida vel viverra nibh ultricies.
+		</p>
+		
+		<p class="txt">
+			Nullam dapibus, est accumsan iaculis imperdiet, est sem sollicitudin odio, a pellentesque lacus orci a ante.
+			Nam condimentum nibh id felis scelerisque sit amet auctor velit rhoncus. Maecenas lobortis, enim eget egestas pretium, 
+			magna nulla porta est, a facilisis sem tortor vitae libero. Sed in velit eget nisi ullamcorper rutrum quis quis mi.
+			Vestibulum mollis erat et odio fermentum eget sagittis quam mattis. Ut porta convallis odio accumsan consectetur.
+			Suspendisse fermentum ligula sit amet purus ullamcorper sed egestas quam tincidunt. Morbi quis tortor nibh, ut tempor purus.
+			Sed pharetra, leo eget faucibus facilisis, magna tellus sollicitudin neque, vitae convallis sapien velit et turpis.
+			Morbi gravida dignissim tincidunt. Suspendisse potenti. Praesent faucibus eleifend cursus. Sed sagittis, nisl tempor feugiat
+			interdum, turpis urna gravida turpis, eget malesuada leo nunc vitae dui. Cras nulla sapien, aliquam non laoreet vitae,
+			bibendum ut ante. Nulla a mollis nisl. Curabitur suscipit, tortor a porta euismod, risus sapien pharetra risus, sed pharetra
+			enim mauris eget tellus. Cras dolor mi, vehicula nec blandit sit amet, mattis eget justo. Pellentesque habitant morbi tristique
+			senectus et netus et malesuada fames ac turpis egestas.
+		</p>
+		
+		<p class="txt">
+			In consequat orci a arcu aliquet euismod. Morbi blandit aliquet risus auctor luctus. Etiam et lacinia metus. Quisque consectetur,
+			nisl eu tempor egestas, sapien lacus iaculis leo, vel accumsan ligula mauris ut tellus. Morbi tempor leo lacinia mauris scelerisque
+			elementum. Phasellus molestie consequat ultricies. Etiam varius imperdiet leo id tincidunt. Vestibulum ante ipsum primis in faucibus
+			orci luctus et ultrices posuere cubilia Curae; Curabitur dui neque, pretium ut tincidunt non, lacinia ac nisl. Morbi sed augue libero.
+			Nullam id venenatis odio. Quisque vitae nisi vitae massa condimentum fringilla. Donec blandit bibendum rutrum. Quisque id nisl ligula.
+			Praesent vehicula ipsum eu massa tincidunt porta.
+		</p>
+	
+	</body>
+</html>
