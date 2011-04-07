@@ -55,8 +55,18 @@
 										  				  	$('#rightclick').slideUp('fast', function(){
 										  				  		menuItem.callback();
 										  				  	});
+										  			  })
+										  			  .prepend(function(){
+										  				  if(menuItem.icon_class){
+										  					  return methods._domBuildMenuListItemIcon(menuItem.icon_class);
+										  			  	  }
 										  			  });
 									  });
+			},
+			
+			_domBuildMenuListItemIcon : function (class_name){
+				return $('<span></span>').addClass( options['list-item-label-icon-class'] )
+										 .addClass(class_name).html('&nbsp;');
 			},
 			
 			_disableDefaultContextMenu : function(){
@@ -123,7 +133,8 @@
 			'frame-class' : 'rightclick-frame',
 			'list-class' : 'rightclick-list',
 			'list-item-class' : 'rightclick-list-item',
-			'list-item-label-class' : 'rightclick-list-item-label'
+			'list-item-label-class' : 'rightclick-list-item-label',
+			'list-item-label-icon-class' : 'rightclick-list-item-label-icon'
 	};
 	
 	var menu = [
