@@ -16,38 +16,56 @@
 	
 	var methods = {
 			
-			setMenu : function(menu_list){
-				var rClickList = $('<ul id="rightclick-list"></ul>');
+			init : function(menu_list, options){
+				methods.setOptions(options);
 				
-				$.each(menu_list, function(index, menuObj){
-					var listItem = $('<li></li>').addClass('rightclick-list-item');
-					var link = $('<a></a>').html(menuObj.text).attr('href', '#')
-											.addClass('rightclick-list-item-label').click(function(event){
-						event.preventDefault();
-						$('#rightclick').hide('slow', function(){
-							menuObj.callback();
-						});
-					});
-					
-					listItem.append(link);
-					rClickList.append(listItem);
-				});
-				
-				return rClickList;
-			},
-			
-			init : function(menu_list){
-				
-			    $(document)[0].oncontextmenu = function() {
-						return false;
-				}; 
-					
-				var rClickFrame = $('<div id="rightclick"></div>').hide();
-				var rClickList = methods.setMenu(menu_list);
-				
-				rClickFrame.append(rClickList);
+				var rClickFrame = methods._domBuildMenu();
+				rClickFrame.append(methods.setMenu(menu_list));
 				$('body').append(rClickFrame);
 				
+				methods._disableDefaultContextMenu();
+				methods._bindLeftClick();
+				methods._bindRightClick();
+			},
+			
+			_domBuildMenuList : function(menu_list){
+				var rClickList = $('<ul id="rightclick-list"></ul>').addClass(options['list-class']);
+				
+				$.each(menu_list, function(index, menuObj){
+					rClickList.append(methods._domBuildMenuListItem(menuObj));
+				});
+				
+				return rClickList;				
+			},
+			
+			_domBuildMenu : function(){
+				var rClickFrame = $('<div id="rightclick"></div>').hide()
+									.addClass(options['frame-class']);
+				
+				return rClickFrame;
+			},
+			
+			_domBuildMenuListItem : function (menuItem){
+				return $('<li></li>').addClass( options['list-item-class'] )
+								  	.append(function() {
+									  			return $('<a></a>').html(menuItem.text).attr('href', '#')
+										  			  .addClass(options['list-item-label-class'])
+										  			  .click(function(event){
+										  				  	event.preventDefault();
+										  				  	$('#rightclick').slideUp('fast', function(){
+										  				  		menuItem.callback();
+										  				  	});
+										  			  });
+									  });
+			},
+			
+			_disableDefaultContextMenu : function(){
+				$(document)[0].oncontextmenu = function() {
+					return false;
+				}; 
+			},
+			
+			_bindLeftClick : function(){
 				/* Bind right click to close the rightClick menu */
 				$('body').mousedown(function(event){
 					if(event.which == 1){
@@ -67,7 +85,9 @@
 						}
 					}
 				});
-				
+			},
+			
+			_bindRightClick : function(){
 				$('body').mousedown(function(event){
 					
 					if(event.which == 3){
@@ -78,19 +98,38 @@
 					}
 					
 				});
+			},
+			
+			setMenu : function(menu_list){
+				var domObj = methods._domBuildMenuList(menu_list);
+				
+				return domObj;
+			},
+			
+			setOptions : function(optionsArray){
+				if(optionsArray === undefined){
+					return this;
+				}
+				
+				for(var property in optionsArray){
+					if(optionsArray.hasOwnProperty(property)){
+						options[property] = optionsArray[property];
+					}
+				}
 			}
 	};
 	
 	var options = {
-			'frame-class' : '.rightclick-frame',
-			'list-class' : '.rightclick-list',
-			'list-item-class' : '.rightclick-list-item',
-			'list-item-label-class' : '.rightclick-list-label-item'
+			'frame-class' : 'rightclick-frame',
+			'list-class' : 'rightclick-list',
+			'list-item-class' : 'rightclick-list-item',
+			'list-item-label-class' : 'rightclick-list-item-label'
 	};
 	
-	var menu = {
-			
-	};
+	var menu = [
+			{ text : 'Test' },
+			{ text : 'Test 2' }
+	];
 	
 	$.fn.rightClick = function(method){
 		
@@ -101,7 +140,7 @@
 			return methods[method].apply(this, arguments);
 		}
 		else {
-			$.error('Method ' + method + 'does not exist on jQuery.rightClick');
+			$.error('Method ' + method + ' does not exist on jQuery.rightClick');
 		}
 	};
 	
