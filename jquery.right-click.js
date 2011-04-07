@@ -1,4 +1,16 @@
-frame = null;
+/*
+* rightClick - jQuery Plugin
+* Shows right click context menu 
+*
+* Copyright (c) 2011 Urban Soban
+*
+* Version: 0.1 (07/04/2011)
+* Requires: jQuery v1.3+
+*
+* Dual licensed under GPL and MIT:
+* http://www.gnu.org/licenses/gpl.html
+* http://www.opensource.org/licenses/mit-license.php
+*/
 
 ( function(){
 	
@@ -7,7 +19,7 @@ frame = null;
 			setMenu : function(menu_list){
 				var rClickList = $('<ul id="rightclick-list"></ul>');
 				
-				jQuery.each(menu_list, function(index, menuObj){
+				$.each(menu_list, function(index, menuObj){
 					var listItem = $('<li></li>').addClass('rightclick-list-item');
 					var link = $('<a></a>').html(menuObj.text).attr('href', '#')
 											.addClass('rightclick-list-item-label').click(function(event){
@@ -26,12 +38,10 @@ frame = null;
 			
 			init : function(menu_list){
 				
-				$(document).ready(function() {  
-					  
-				     //this one line will disable the right mouse click menu  
-				     $(document)[0].oncontextmenu = function() {return false;}; 	  
-				});  
-				
+			    $(document)[0].oncontextmenu = function() {
+						return false;
+				}; 
+					
 				var rClickFrame = $('<div id="rightclick"></div>').hide();
 				var rClickList = methods.setMenu(menu_list);
 				
@@ -76,6 +86,10 @@ frame = null;
 			'list-class' : '.rightclick-list',
 			'list-item-class' : '.rightclick-list-item',
 			'list-item-label-class' : '.rightclick-list-label-item'
+	};
+	
+	var menu = {
+			
 	};
 	
 	$.fn.rightClick = function(method){
