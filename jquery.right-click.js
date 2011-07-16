@@ -14,6 +14,12 @@
 
 ( function(){
 	
+    function ContextMenu(list, options) {
+    
+    
+    
+    }
+    
 	var methods = {
 			
 			init : function(menu_list, options){

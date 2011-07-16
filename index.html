@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>jQuery rihtClick Demo</title>	
+		<title>jQuery rightClick Demo</title>	
 		
 		<style type="text/css">
 			h1 {
@@ -17,61 +17,18 @@
 				color: #202020;
 				line-height: 16px;
 			}
-			
-			#rightclick {
-				width: 200px;
-				background-color: #454440;
-			}
-			#rightclick-list {
-				margin: 0;
-				padding: 0;
-			}
-			.rightclick-list-item, .rightclick-list-item-label {
-				color: #dfdbd2;
-				font-size: 12px;
-				font-family: Arial, Helvetica;
-				text-decoration: none;
-				margin: 0;
-			}
-			.rightclick-list-item {
-				width: 100%;
-				padding: 0;
-				list-style-type: none;
-			}
-			.rightclick-list-item-label {
-				display: block;
-				width: 160px;
-				height: 100%;
-				padding: 5px 20px 5px 20px;
-			}
-			.rightclick-list-item-label:hover {
-				background-color: #f17948;
-			}
-			.testclass {
-				border: 1px solid red;
-			}
+            .rclick-container {
+                border: 1px solid red;
+                background: #f7f7f7;
+            }
 		</style>
 		
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
-		<script type="text/javascript" src="jquery.right-click.js"></script>
+		<script type="text/javascript" src="jquery.rightclick.js"></script>
 		<script type=text/javascript>
 			$(document).ready(function(){
-				$('.txt').rightClick('init', 
-												[
-												 	{
-												 		text : 'Test',
-												 		callback : function(){
-												 			alert('test alert 1');
-												 		}
-												 	},
-												 	{
-												 		text : 'Test 2',
-												 		callback : function(){
-												 			alert('test alert 2');
-												 		}
-												 	}
-												]
-									);
+                $('.txt').rightClick('init', { test : {}, test2 : {} });
+                $('h1').rightClick('init', { testh1 : {}, testh12 : {} });
 			});
 		</script>
 	</head>
