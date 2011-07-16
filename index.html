@@ -17,18 +17,55 @@
 				color: #202020;
 				line-height: 16px;
 			}
-            .rclick-container {
-                border: 1px solid red;
-                background: #f7f7f7;
-            }
+    		.rclick-container {
+				min-width: 200px;
+				background-color: #454440;
+			}
+			.rclick-list {
+				margin: 0;
+				padding: 0;
+			}
+			.rclick-list-item, .rclick-list-item-label {
+				color: #dfdbd2;
+				font-size: 12px;
+				font-family: Arial, Helvetica;
+				text-decoration: none;
+				margin: 0;
+			}
+			.rclick-list-item {
+				width: 100%;
+				padding: 0;
+				list-style-type: none;
+			}
+			.rclick-list-item-label {
+				display: block;
+                width: auto;
+                padding: 3px;
+			}
+			.rclick-list-item-label:hover {
+				background-color: #f17948;
+			}
 		</style>
 		
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
 		<script type="text/javascript" src="jquery.rightclick.js"></script>
 		<script type=text/javascript>
 			$(document).ready(function(){
-                $('.txt').rightClick('init', { test : {}, test2 : {} });
-                $('h1').rightClick('init', { testh1 : {}, testh12 : {} });
+                var menuItemFirst = {
+                        label   :   'First option',
+                        callback:   function() {
+                                        alert('You\'ve pressed the first option');
+                                    }
+                    };
+                var menuItemSecond = {
+                        label   :   'Second option',
+                        callback:   function() {
+                                        alert('You\'ve pressed the second option');
+                                    }
+                    };
+                
+                $('.txt').rightClick('init', [menuItemFirst, menuItemSecond]);
+                //$('h1').rightClick('init', { testh1 : {}, testh12 : {} });
 			});
 		</script>
 	</head>

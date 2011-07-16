@@ -11,6 +11,8 @@
 * http://www.gnu.org/licenses/gpl.html
 * http://www.opensource.org/licenses/mit-license.php
 */
+var EvilGlobal = [];
+
 ( function(){
 
     // Context menu
@@ -29,9 +31,22 @@
        menuList = $('<ul></ul>').addClass('rclick-list');
        
        // Build menu items and attach them to the menu
-       $.each(this.list, function(itemId, item) {
-           var menuItem = $('<li>' + itemId + '</li>').addClass('rclick-list-item');
-           menuList.append(menuItem);
+       $.each(this.list, function(idx, properties) {
+           var menuItem = $('<li></li>').addClass('rclick-list-item'),
+           menuItemLabel = $('<a>' + properties.label + '</a>')
+                            .addClass('rclick-list-item-label')
+                            .attr('href', '#')
+                            .click(function(e){
+                                    e.preventDefault();
+                                    
+                                    if ( properties.callback &&
+                                        (typeof properties.callback) === 'function'
+                                    ){
+                                        properties.callback();    
+                                    }
+                                });
+         
+           menuList.append(menuItem.append(menuItemLabel));
         });
         
         // Append menu list to the container
@@ -52,17 +67,18 @@
         element.mousedown(this.rightClickHandler);
     };
     
+    // Mousedown handler (calls ContextMenu.prototype.showMenu)
     ContextMenu.prototype.rightClickHandler = function(event){
         if ( event.which === 3 ) {
-            var menu = $(this).data('rightclick');
-            menu.showMenu(event);
+            $(this).data('rightclick').showMenu(event);
             return false;
         }
     };
     
     // Bind left click to hide the context menu
     ContextMenu.prototype.bindLeftClick = function() {
-        var menu = this.menu;
+        var t = this,
+        menu = this.menu;
         
         $('body').mousedown(function(e){
             if(e.which === 1 || e.which === 3){
@@ -75,10 +91,7 @@
                     e.pageX > (menuOffsetX + menuWidth) ||
                     e.pageY < menuOffsetY ||	e.pageY > (menuOffsetY + menuHeight)
 				){
-				    menu.hide('slow', function(){
-                            $(this).detach();
-                        });
-                    $('body').unbind(e);    // unbind left click
+                    t.hideMenu(e);
 				}
 		    }
         });
@@ -106,19 +119,34 @@
         var existingContextMenus = $('.rclick-container');
         
         // If menu already exists, remove it and show the new one
+        // @TODO: refactor to use ContextMenu.prototype.hideMenu()
         if ( existingContextMenus.length > 0 ) {
             existingContextMenus.hide('slow',
                 function() {
                     $(this).detach();
                     show();
-            });   
+            });
         }
+        
         // else just show it
         else {
             show();    
         }
             
         return false;
+    };
+    
+    ContextMenu.prototype.hideMenu = function(event, callback) {
+        
+        this.menu.hide('slow', function(){
+            $(this).detach();
+            
+            if ( (typeof callback) === 'function' ) {
+                callback();    
+            }
+        });
+        
+        $('body').unbind(event);    // unbind left click
     };
     
     /* Plugin methods */
