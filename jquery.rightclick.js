@@ -7,6 +7,10 @@
 * Version: 0.1 (07/04/2011)
 * Requires: jQuery v1.3+
 *
+* To do: 
+*   - Icons
+*   - Disable default context menu on the context menu itself
+*
 * Dual licensed under GPL and MIT:
 * http://www.gnu.org/licenses/gpl.html
 * http://www.opensource.org/licenses/mit-license.php
@@ -25,6 +29,7 @@ var EvilGlobal = [];
     
     // Builds menu DOM structure
     ContextMenu.prototype.buildMenu = function(){
+        var t = this;
         
         // Build menu container and empty list
        var menuContainer = $('<div></div>').addClass('rclick-container'),
@@ -42,7 +47,8 @@ var EvilGlobal = [];
                                     if ( properties.callback &&
                                         (typeof properties.callback) === 'function'
                                     ){
-                                        properties.callback();    
+                                        properties.callback(); 
+                                        t.hideMenu();
                                     }
                                 });
          
