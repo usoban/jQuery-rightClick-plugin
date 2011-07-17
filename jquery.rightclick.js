@@ -21,25 +21,27 @@ var EvilGlobal = [];
 
     // Context menu
     function ContextMenu(list, options) {
+        
         this.list = list;
-        this.options = options;
+        this.options = $.extend({}, $.fn.rightClick.defaults, options);
         
         this.buildMenu();
     }
     
     // Builds menu DOM structure
     ContextMenu.prototype.buildMenu = function(){
+        
         var t = this;
         
         // Build menu container and empty list
-       var menuContainer = $('<div></div>').addClass('rclick-container'),
-       menuList = $('<ul></ul>').addClass('rclick-list');
+       var menuContainer = $('<div></div>').addClass(t.options.container).addClass('rclick'),
+       menuList = $('<ul></ul>').addClass(t.options.list);
        
        // Build menu items and attach them to the menu
        $.each(this.list, function(idx, properties) {
-           var menuItem = $('<li></li>').addClass('rclick-list-item'),
+           var menuItem = $('<li></li>').addClass(t.options.item),
            menuItemLabel = $('<a>' + properties.label + '</a>')
-                            .addClass('rclick-list-item-label')
+                            .addClass(t.options.label)
                             .attr('href', '#')
                             .click(function(e){
                                     e.preventDefault();
@@ -64,6 +66,7 @@ var EvilGlobal = [];
     
     // Bind right click
     ContextMenu.prototype.bindRightClick = function(element){
+        
         // Disable default context menu
         element.bind('contextmenu', function(){
             return false;
@@ -75,19 +78,35 @@ var EvilGlobal = [];
     
     // Mousedown handler (calls ContextMenu.prototype.showMenu)
     ContextMenu.prototype.rightClickHandler = function(event){
+        
         if ( event.which === 3 ) {
-            $(this).data('rightclick').showMenu(event);
+            var contextMenu = $(this).data('rightclick');        
+            
+            // Detach all other active context menus (except if the same one)
+            $('.rclick').each(function(){
+                    if ( contextMenu.menu.css('left') !== $(this).css('left') ||
+                         contextMenu.menu.css('top') !== $(this).css('top')
+                        ){
+                            $(this).hide(function(){
+                                    $(this).detach();
+                                });
+                        }
+                });
+            
+            // Show context menu
+            contextMenu.showMenu(event);
             return false;
         }
     };
     
     // Bind left click to hide the context menu
     ContextMenu.prototype.bindLeftClick = function() {
+        
         var t = this,
         menu = this.menu;
         
         $('body').mousedown(function(e){
-            if(e.which === 1 || e.which === 3){
+            if(e.which === 1){
                 var menuOffsetX = menu.offset().left,
 				menuOffsetY = menu.offset().top,
 				menuWidth = menu.width(),
@@ -107,41 +126,23 @@ var EvilGlobal = [];
         
      /* Displays menu */
     ContextMenu.prototype.showMenu = function(event) {
+        
         var menu = this.menu;
         
         // Bind the left click to hide menu
         this.bindLeftClick();
-    
-        var show = function() {
-            // Append menu to DOM and display it
-            $('body').append(menu);
+
+        // Append menu to DOM and display it
+        $('body').append(menu);
+        menu.css('top', event.pageY+10 + 'px')
+            .css('left', event.pageX+10 + 'px')
+            .css('position', 'absolute')
+            .show();
         
-            menu.css('top', event.pageY+10 + 'px')
-                .css('left', event.pageX+10 + 'px')
-                .css('position', 'absolute')
-                .show();
-        };
-    
-        var existingContextMenus = $('.rclick-container');
-        
-        // If menu already exists, remove it and show the new one
-        // @TODO: refactor to use ContextMenu.prototype.hideMenu()
-        if ( existingContextMenus.length > 0 ) {
-            existingContextMenus.hide('slow',
-                function() {
-                    $(this).detach();
-                    show();
-            });
-        }
-        
-        // else just show it
-        else {
-            show();    
-        }
-            
         return false;
     };
     
+    /* Hides menu and executes callback, if provided */
     ContextMenu.prototype.hideMenu = function(event, callback) {
         
         this.menu.hide('slow', function(){
@@ -200,5 +201,14 @@ var EvilGlobal = [];
 			$.error('Method ' + method + ' does not exist on jQuery.rightClick');
 		}
 	};
+        
+    // Default options
+    $.fn.rightClick.defaults = {
+            container   :   'rclick-container',
+            list        :   'rclick-list',
+            item        :   'rclick-list-item',
+            label       :   'rclick-list-item-label',
+            icon        :   'rclick-list-item-icon'
+        };
 	
 })( jQuery );
