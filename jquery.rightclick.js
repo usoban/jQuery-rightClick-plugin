@@ -15,7 +15,6 @@
 * http://www.gnu.org/licenses/gpl.html
 * http://www.opensource.org/licenses/mit-license.php
 */
-var EvilGlobal = [];
 
 ( function(){
 
