@@ -68,6 +68,11 @@
                                 
                                 t.hideMenu();
                             });
+            if ( item.icon ){
+                label.addClass(t.options.icon)
+                     .css('background-image', 'url(' + item.icon + ')');
+            }                 
+                            
             _item.append(label);
         }
         
