@@ -4,8 +4,8 @@
 *
 * Copyright (c) 2011 Urban Soban
 *
-* Version: 0.1 (07/04/2011)
-* Requires: jQuery v1.3+
+* Version: 0.2 (17/07/2011)
+* Requires: jQuery v1.4+
 *
 * To do: 
 *   - Icons
@@ -37,23 +37,8 @@
        menuList = $('<ul></ul>').addClass(t.options.list);
        
        // Build menu items and attach them to the menu
-       $.each(this.list, function(idx, properties) {
-           var menuItem = $('<li></li>').addClass(t.options.item),
-           menuItemLabel = $('<a>' + properties.label + '</a>')
-                            .addClass(t.options.label)
-                            .attr('href', '#')
-                            .click(function(e){
-                                    e.preventDefault();
-                                    
-                                    if ( properties.callback &&
-                                        (typeof properties.callback) === 'function'
-                                    ){
-                                        properties.callback(); 
-                                        t.hideMenu();
-                                    }
-                                });
-         
-           menuList.append(menuItem.append(menuItemLabel));
+       $.each(this.list, function(idx, properties) {         
+           menuList.append(t.buildItem(properties));
         });
         
         // Append menu list to the container
@@ -61,6 +46,32 @@
         this.menu = menuContainer;
         
         return false;
+    };
+    
+    ContextMenu.prototype.buildItem = function(item){
+        var t = this,
+        _item = $('<li></li>').addClass(t.options.item);
+        
+        if ( item === 'separator' ) {
+            _item.append($('<hr />').addClass(t.options.separator));
+        }
+        else if ( typeof item === 'object' ) {
+            var label = $('<a>' + item.label + '</a>')
+                        .addClass(t.options.label)
+                        .attr('href', '#')
+                        .click(function(e){
+                                e.preventDefault();
+                                
+                                if (typeof item.callback === 'function'){
+                                    item.callback();
+                                }
+                                
+                                t.hideMenu();
+                            });
+            _item.append(label);
+        }
+        
+        return _item;
     };
     
     // Bind right click
@@ -207,7 +218,8 @@
             list        :   'rclick-list',
             item        :   'rclick-list-item',
             label       :   'rclick-list-item-label',
-            icon        :   'rclick-list-item-icon'
+            icon        :   'rclick-list-item-icon',
+            separator   :   'rclick-separator'
         };
 	
 })( jQuery );

@@ -17,11 +17,8 @@
 				color: #202020;
 				line-height: 16px;
 			}
-            .rclick-2 {
-                background: #c0c0c0;    
-            }
     		.rclick-container {
-				min-width: 200px;
+                width: auto;
 				background-color: #454440;
 			}
 			.rclick-list {
@@ -38,6 +35,7 @@
 			.rclick-list-item {
 				width: 100%;
 				padding: 0;
+                padding-right: 20px;
 				list-style-type: none;
 			}
 			.rclick-list-item-label {
@@ -48,6 +46,15 @@
 			.rclick-list-item-label:hover {
 				background-color: #f17948;
 			}
+            .rclick-separator {
+                width: 95%;
+                text-align: center;
+                border: none;
+                color: #c0c0c0;
+                background-color: #c0c0c0;
+                height: 1px;
+                line-height: 1px;
+            }
 		</style>
 		
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
@@ -67,7 +74,7 @@
                                     }
                     };
                 
-                $('.txt').rightClick('init', [menuItemFirst, menuItemSecond]);
+                $('.txt').rightClick('init', [menuItemFirst, 'separator', menuItemSecond]);
                 //$('h1').rightClick('init', { testh1 : {}, testh12 : {} });
 			});
 		</script>
